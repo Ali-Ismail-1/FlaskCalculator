@@ -17,16 +17,16 @@ The GET request will make the calculation and send the result back to the html p
 ## Requirements
 
 ### You will need the following packages to run the solution: 
-click==8.1.3
-colorama==0.4.5
-Flask==2.2.2
-importlib-metadata==5.0.0
-itsdangerous==2.1.2
-Jinja2==3.1.2
-MarkupSafe==2.1.1
-typing_extensions==4.4.0
-Werkzeug==2.2.2
-zipp==3.9.0
+- click==8.1.3
+- colorama==0.4.5
+- Flask==2.2.2
+- importlib-metadata==5.0.0
+- itsdangerous==2.1.2
+- Jinja2==3.1.2
+- MarkupSafe==2.1.1
+- typing_extensions==4.4.0
+- Werkzeug==2.2.2
+- zipp==3.9.0
 
 
 ## Setup
