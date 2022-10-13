@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/')
 def home():
     try:        
-        return render_template('home.html')
+        return render_template('index.html')
     except Exception as e:
         print(e)        
         return render_template('error.html')    
