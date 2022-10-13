@@ -30,7 +30,7 @@ def solve():
 
         # 1. Get Payload
         equationArray = request.args.getlist('equationArray[]')
-        print(equationArray)
+        #print(equationArray)
 
         # 2. Validate
         if (not help_validate(equationArray)):
@@ -59,7 +59,7 @@ def help_validate(equationArray):
 
     # Cannot Calculate 
     if (len(equationArray) == 0):
-        print('Error: Array Length Too Short')
+        #print('Error: Array Length Too Short')
         return False
 
     # If only one, Must be a number
@@ -68,7 +68,7 @@ def help_validate(equationArray):
 
     # First and Last in array must be numeric
     if (len(equationArray) > 1 and (help_isfloatable(equationArray[0]) == False or help_isfloatable(equationArray[len(equationArray) - 1]) == False)):
-        print('Error: Must Start and End Numeric')
+        #print('Error: Must Start and End Numeric')
         return False
 
     # Must be alternating operators and numbers
