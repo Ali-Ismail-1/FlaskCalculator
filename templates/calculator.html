@@ -9,93 +9,94 @@
 
 {% block scripts %}
 <script>
+    $(document).ready(function() {
+        var equationArray = [];
+        var operator = false;
+        var lastOperator = ''        
+        var currentNumber = ''
+        console.log("Hello world, jQuery is online")
 
+        function calculate() {
+            $.ajax({
+                url: "solve",
+                method : "GET",            
+                data : { 'equationArray' : equationArray},
+                success: function (response) {
+                    
+                    if (response.Status){
+                        var answer = response.Answer;
+                        if (answer % 1 === 0) {
+                            answer = parseInt(answer); 
+                        }
 
+                        // Reset variables and Show Result
+                        equationArray = []; 
+                        currentNumber = answer;
+                        $("#txtDisplay").val(answer);
+                    }
+                    else {
+                        equationArray = []; 
+                        currentNumber = '';
+                        $("#txtDisplay").val('Error Invalid Input');
+                    }
 
-  $(document).ready(function() {
-   var equationArray = [];
-   var operator = false;
-   var lastOperator = ''        
-   var currentNumber = ''
-   console.log("Hello world, jQuery is online")
+                    
+                },
+                error: function (response) {                    
+                    console.log(response);                            
+                    console.log(response.Message);                            
+                },
+            });            
+        }
 
-   function calculate() {
-       console.log("call ajax and calculate");                        
+        $(".btnSolve").click(function() {
+            equationArray.push(currentNumber);
+            calculate();
+        });
 
-       $.ajax({
-           url: "calc",
-           method : "GET",            
-           //data : {'test': 'test'},            
-           data : { 'equationArray' : equationArray},
-           data : { 'equationArray' : equationArray, 
-                   'equatoinArrayJSON' : JSON.stringify(equationArray)
-           },
-           success: function (response) {
-               // Do some success scripts
-               console.log('success');
-               if (response % 1 === 0) {
-                   response = parseInt(response); 
-               }
-               $("#txtDisplay").val(response);
-               equationArray = [];
-               currentNumber = response;
-           },
-           error: function (response) {
-               // Request error. Display right error message
-               console.log('error');                            
-           },
-       });            
-   }
+        $(".btnEnhance").click(function() {
+            var operator = $(this).val();
+            if (operator == "AC") {
+                    equationArray = [];
+                    currentNumber = '';
+                    $("#txtDisplay").val(currentNumber);
+            }
+            else if (operator == "FLIP") {
+                currentNumber *= -1;
+                $("#txtDisplay").val(currentNumber);
+            }
+            else if (operator == "%"){
+                    currentNumber /= 100;
+                    $("#txtDisplay").val(currentNumber);
+            }
 
-   $(".btnCalc").click(function() {
-       var value = $(this).val();
-       console.log("button pressed: " + value);
+        });
 
-       if ($(this).hasClass("btnNumber")) {
-           if(currentNumber == '') {
-               currentNumber = value;
-           }
-           else {
-               currentNumber += value;
-           }
-           $("#txtDisplay").val(currentNumber);                
-           //console.log("current Number: " + currentNumber);
+        $(".btnOperator").click(function() {
+            var operator = $(this).val();
+            if (currentNumber == ''){                    
+                equationArray.pop();
+                equationArray.push(operator);                    
+            }
+            else {
+                equationArray.push(currentNumber);
+                equationArray.push(operator);
+                currentNumber = '';
+            }                               
+        });
 
-       }
-       else {
-           operator = value;
-           if (operator == "AC") {
-                   equationArray = [];
-                   currentNumber = '';
-                   $("#txtDisplay").val(currentNumber);
-               }
-           else if (operator == "=") {                              
-               equationArray.push(currentNumber);
-               calculate();
-           }
-           else if (operator == "FLIP") {
-               currentNumber *= -1;
-               $("#txtDisplay").val(currentNumber);
-           }
-           else if (operator == "%"){
-               currentNumber /= 100;
-               $("#txtDisplay").val(currentNumber);
-           }
-           else if (currentNumber == ''){                    
-               equationArray.pop();
-               equationArray.push(value);                    
-           }
-           else {
-               equationArray.push(currentNumber);
-               equationArray.push(operator);
-               currentNumber = '';
-           }                                                 
-       }
-       console.log("Array is: " + equationArray + " CurrentNumber is: " + currentNumber);
-   });
+        $(".btnNumber").click(function() {
+            var value = $(this).val();
+            if(currentNumber == '') {                
+                    currentNumber = value;
+            }
+            else {
+                currentNumber += value;
+            }
+            $("#txtDisplay").val(currentNumber);                
+        });
 
-
-  });
+    });
 </script>
 {% endblock %}
 
