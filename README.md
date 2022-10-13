@@ -39,7 +39,7 @@ git clone https://github.com/Ali-Ismail-1/FlaskCalculator.git
 #### Install django if you do not have it already 
 pip install Flask==2.2.2
 
-#### Open the folder CryptoFiCalculator and run the following command to start the server:
+#### Open the folder FlaskCalculator and run the following command to start the server:
 python app.py
 
 #### View the Calculator app using the following url:
